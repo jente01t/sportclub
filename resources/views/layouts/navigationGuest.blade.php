@@ -38,7 +38,7 @@
                             {{ __('Login') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.show')">
-                            {{ __('Profile') }}
+                            {{ __('Profiel') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->

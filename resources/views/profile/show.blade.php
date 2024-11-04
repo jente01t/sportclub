@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
+            {{ __('Profiel') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,25 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
-                    <a href="{{ route('profile.edit') }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit Profile') }}</a>
+                    @if (Auth::user()->profile)
+                    <div>
+                                <h3 class="text-lg font-semibold">{{ Auth::user()->name }}</h3>
+                                <p class="text-gray-600">{{ Auth::user()->profile->birthday }}</p>
+                            </div>
+                        <div class="flex items-center space-x-4">
+                            <img src="{{ Auth::user()->profile->foto }}" alt="{{ Auth::user()->name }}" class="w-22 h-22  rounded-full">
+                            
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="text-md font-semibold">{{ __('Over Mij') }}</h4>
+                            <p class="text-gray-700">{{ Auth::user()->profile->bio }}</p>
+                        </div>
+                    @else
+                        <p>{{ __('Geen profielinformatie beschikbaar.') }}</p>
+                    @endif
+                    <div class="mt-6">
+                        <a href="{{ route('profile.edit') }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit Profiel') }}</a>
+                    </div>
                 </div>
             </div>
         </div>
