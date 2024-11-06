@@ -15,7 +15,7 @@
                                 <p class="text-gray-600">{{ Auth::user()->profile->birthday }}</p>
                             </div>
                         <div class="flex items-center space-x-4">
-                            <img src="{{ Auth::user()->profile->foto }}" alt="{{ Auth::user()->name }}" class="w-22 h-22  rounded-full">
+                            <img src="{{ asset('storage/' . $user->profile->foto) }}" alt="Profile Photo" class="w-22 h-22 rounded-full">
                             
                         </div>
                         <div class="mt-4">

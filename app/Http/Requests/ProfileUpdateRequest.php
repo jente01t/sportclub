@@ -20,11 +20,13 @@ class ProfileUpdateRequest extends FormRequest
             'email' => [
                 'required',
                 'string',
-                'lowercase',
                 'email',
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'birthday' => ['required', 'date'],
+            'bio' => ['required', 'string'],
+            'foto' => ['nullable', 'image'],
         ];
     }
 }

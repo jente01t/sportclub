@@ -37,13 +37,30 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
+
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoName = time() . '_' . $foto->getClientOriginalName();
+            $fotoPath = $foto->storeAs('foto', $fotoName, 'public');
+            \Log::debug('Foto uploaded', ['fotoName' => $fotoName, 'fotoPath' => $fotoPath]);
+        } else {
+            $fotoPath = $user->profile->foto;
+            \Log::debug('No new foto uploaded, using existing', ['fotoPath' => $fotoPath]);
+        }
+
+        $user->profile->update([
+            'birthday' => $request->input('birthday'),
+            'bio' => $request->input('bio'),
+            'foto' => $fotoPath,
+        ]);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

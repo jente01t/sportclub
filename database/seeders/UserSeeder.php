@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         \App\Models\Profile::factory()->create([
             'user_id' => $user->id,
             'birthday' => Carbon::now()->subYears(rand(18, 50))->format('Y-m-d'),
-            'foto' => 'foto/test.jpg', 
+            'foto' => 'foto/test.png', 
             'bio' => 'Dit is een voorbeeld bio.',
         ]);
     }
