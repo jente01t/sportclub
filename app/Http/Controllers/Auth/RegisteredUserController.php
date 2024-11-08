@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class RegisteredUserController extends Controller
 {
@@ -31,8 +32,11 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'birthday' => ['required', 'date'],
+            'bio' => ['required', 'string'],
+            'foto' => ['required'],
         ]);
 
         $user = User::create([
@@ -41,10 +45,19 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $photoPath = $request->file('foto')->store('foto', 'public');
+
+        Profile::create([
+            'user_id' => $user->id,
+            'birthday' => $request->birthday,
+            'bio' => $request->bio,
+            'foto' => $photoPath,
+        ]);
+
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('dashboard'));
     }
 }

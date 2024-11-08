@@ -1,6 +1,18 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
+
+        @if ($errors->any())
+            <div class="mb-4">
+                <div class="font-medium text-red-600">{{ __('Iets ging fout!') }}</div>
+
+                <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <!-- Name -->
         <div>
@@ -37,6 +49,25 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+
+        <div class="mt-4">
+            <x-input-label for="birthday" :value="__('Birthday')" />
+            <x-text-input id="birthday" class="block mt-1 w-full" type="date" name="birthday" :value="old('birthday')" required />
+            <x-input-error :messages="$errors->get('birthday')" class="mt-2" />
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="bio" :value="__('Bio')" />
+            <x-text-input id="bio" class="block mt-1 w-full" type="text" name="bio" :value="old('bio')" required />
+            <x-input-error :messages="$errors->get('bio')" class="mt-2" />
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="foto" :value="__('Profiel foto (kleinder dan 2MB) ')" />
+            <input id="foto" class="block mt-1 w-full" type="file" name="foto" required />
+            <x-input-error :messages="$errors->get('foto')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
