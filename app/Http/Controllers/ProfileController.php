@@ -8,19 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Profile;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
-
-    public function show(Request $request): View
+    /**
+     * Show the profile of a specific user.
+     */
+    public function show($id): View
     {
+        $user = User::with('profile')->findOrFail($id);
+
         return view('profile.show', [
-            'user' => $request->user(),
+            'user' => $user,
         ]);
     }
-
-
-
 
     /**
      * Display the user's profile form.
@@ -84,5 +87,25 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    /**
+     * Search for profiles.
+     */
+    public function search(Request $request): View
+    {
+        $query = $request->input('query');
+
+        if ($query) {
+            $profiles = Profile::whereHas('user', function($q) use ($query) {
+                $q->where('name', 'like', "%{$query}%");
+            })->get();
+        } else {
+            $profiles = Profile::with('user')->get();
+        }
+
+        return view('profile.search', [
+            'profiles' => $profiles,
+        ]);
     }
 }
