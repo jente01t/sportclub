@@ -28,10 +28,12 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request, $id): View
     {
+        $user = User::with('profile')->findOrFail($id);
+
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
         ]);
     }
 
@@ -65,7 +67,7 @@ class ProfileController extends Controller
             'foto' => $fotoPath,
         ]);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit', ['id' => $user->id])->with('status', 'profile-updated');
     }
 
     /**

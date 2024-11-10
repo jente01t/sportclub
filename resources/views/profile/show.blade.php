@@ -27,7 +27,7 @@
                     @auth
                         @if (Auth::id() === $user->id)
                             <div class="mt-6">
-                                <a href="{{ route('profile.edit') }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit Profiel') }}</a>
+                                <a href="{{ route('profile.edit', ['id' => $user->id]) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit Profiel') }}</a>
                             </div>
                         @endif
                     @endauth
