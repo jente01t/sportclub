@@ -50,6 +50,11 @@
                             <x-dropdown-link :href="route('profile.show', ['id' => Auth::user()->id])">
                                 {{ __('Profiel') }}
                             </x-dropdown-link>
+                            @if(Auth::user()->role == 'admin')
+                                <x-dropdown-link :href="route('admin.dashboard')">
+                                    {{ __('Admin dashboard') }}
+                                </x-dropdown-link>
+                            @endif
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"

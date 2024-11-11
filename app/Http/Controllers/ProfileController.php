@@ -55,10 +55,8 @@ class ProfileController extends Controller
             $foto = $request->file('foto');
             $fotoName = time() . '_' . $foto->getClientOriginalName();
             $fotoPath = $foto->storeAs('foto', $fotoName, 'public');
-            \Log::debug('Foto uploaded', ['fotoName' => $fotoName, 'fotoPath' => $fotoPath]);
         } else {
             $fotoPath = $user->profile->foto;
-            \Log::debug('No new foto uploaded, using existing', ['fotoPath' => $fotoPath]);
         }
 
         $user->profile->update([
