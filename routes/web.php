@@ -6,13 +6,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NewsController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/profile/search', [ProfileController::class, 'search'])->name('profile.search');
 
-Route::get('/news', [NewsController::class, 'index'])->name('news.index');
-Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
+Route::prefix('news')->group(function () {
+    Route::get('/', [NewsController::class, 'index'])->name('news.index');
+    Route::get('/{id}', [NewsController::class, 'show'])->name('news.show');
+});
+
+
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
@@ -37,6 +42,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/demote/{id}', [AdminController::class, 'demoteToUser'])->name('admin.demote');
     Route::get('/admin/create-user', [AdminController::class, 'createUser'])->name('admin.createUser');
     Route::post('/admin/store-user', [AdminController::class, 'storeUser'])->name('admin.storeUser');
+    Route::get('/admin/news/create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('/admin/news', [NewsController::class, 'store'])->name('news.store');
+    Route::get('/admin/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
+    Route::patch('/admin/news/{id}', [NewsController::class, 'update'])->name('news.update');
+    Route::delete('/admin/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
 });
 
 require __DIR__.'/auth.php';

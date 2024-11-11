@@ -13,9 +13,6 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
-    /**
-     * Show the profile of a specific user.
-     */
     public function show($id): View
     {
         $user = User::with('profile')->findOrFail($id);
@@ -25,9 +22,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request, $id): View
     {
         $user = User::with('profile')->findOrFail($id);
@@ -37,9 +31,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
@@ -68,9 +59,6 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit', ['id' => $user->id])->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -89,9 +77,6 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    /**
-     * Search for profiles.
-     */
     public function search(Request $request): View
     {
         $query = $request->input('query');

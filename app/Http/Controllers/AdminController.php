@@ -4,18 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
 class AdminController extends Controller
 {
-    /**
-     * Show the admin dashboard.
-     */
     public function dashboard(Request $request)
     {
         $query = $request->input('query');
+        $query2 = $request->input('query2');
 
         if ($query) {
             $users = User::where('name', 'like', "%{$query}%")->get();
@@ -23,12 +22,18 @@ class AdminController extends Controller
             $users = User::all();
         }
 
-        return view('admin.dashboard', compact('users', 'query'));
+        if ($query2) {
+            $newsItems = News::where('title', 'like', "%{$query2}%")
+                ->orWhere('content', 'like', "%{$query2}%")
+                ->orderBy('published_at', 'desc')
+                ->get();
+        } else {
+            $newsItems = News::orderBy('published_at', 'desc')->get();
+        }
+
+        return view('admin.dashboard', compact('users', 'newsItems', 'query', 'query2'));
     }
 
-    /**
-     * Promote a user to admin.
-     */
     public function promoteToAdmin($id)
     {
         $user = User::findOrFail($id);
@@ -38,9 +43,6 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard')->with('status', 'User promoted to admin.');
     }
 
-    /**
-     * Demote an admin to user.
-     */
     public function demoteToUser($id)
     {
         $user = User::findOrFail($id);
@@ -50,17 +52,11 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard')->with('status', 'Admin demoted to user.');
     }
 
-    /**
-     * Show the form for creating a new user.
-     */
     public function createUser()
     {
         return view('admin.create-user');
     }
 
-    /**
-     * Store a newly created user in storage.
-     */
     public function storeUser(Request $request)
     {
         $request->validate([
