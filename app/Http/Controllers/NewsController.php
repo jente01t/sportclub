@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -28,15 +29,8 @@ class NewsController extends Controller
         return view('news.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreNewsRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'required',
-            'content' => 'required|string',
-            'published_at' => 'required|date',
-        ]);
-
         $imagePath = $request->file('image')->store('news', 'public');
 
         News::create([
@@ -57,15 +51,8 @@ class NewsController extends Controller
         return view('news.edit', compact('newsItem'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateNewsRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'nullable',
-            'content' => 'required|string',
-            'published_at' => 'required|date',
-        ]);
-
         $newsItem = News::findOrFail($id);
 
         if ($request->hasFile('image')) {

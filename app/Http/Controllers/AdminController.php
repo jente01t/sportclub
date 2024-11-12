@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\News;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -57,18 +58,8 @@ class AdminController extends Controller
         return view('admin.create-user');
     }
 
-    public function storeUser(Request $request)
+    public function storeUser(StoreUserRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|string|in:user,admin',
-            'birthday' => 'required|date',
-            'bio' => 'required|string',
-            'foto' => 'required',
-        ]);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
