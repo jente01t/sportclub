@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\FaqController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -36,17 +37,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/admin/promote/{id}', [AdminController::class, 'promoteToAdmin'])->name('admin.promote');
-    Route::get('/admin/demote/{id}', [AdminController::class, 'demoteToUser'])->name('admin.demote');
-    Route::get('/admin/create-user', [AdminController::class, 'createUser'])->name('admin.createUser');
-    Route::post('/admin/store-user', [AdminController::class, 'storeUser'])->name('admin.storeUser');
-    Route::get('/admin/news/create', [NewsController::class, 'create'])->name('news.create');
-    Route::post('/admin/news', [NewsController::class, 'store'])->name('news.store');
-    Route::get('/admin/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
-    Route::patch('/admin/news/{id}', [NewsController::class, 'update'])->name('news.update');
-    Route::delete('/admin/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/promote/{id}', [AdminController::class, 'promoteToAdmin'])->name('admin.promote');
+    Route::get('/demote/{id}', [AdminController::class, 'demoteToUser'])->name('admin.demote');
+    Route::get('/create-user', [AdminController::class, 'createUser'])->name('admin.createUser');
+    Route::post('/store-user', [AdminController::class, 'storeUser'])->name('admin.storeUser');
+    Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+    Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
+    Route::patch('/news/{id}', [NewsController::class, 'update'])->name('news.update');
+    Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
 });
 
 require __DIR__.'/auth.php';

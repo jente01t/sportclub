@@ -60,7 +60,7 @@
                                 <li class="mb-2">
                                     <h4 class="text-xl font-bold">{{ $newsItem->title }}</h4>
                                     <p class="text-gray-600">{{ $newsItem->published_at }}</p>
-                                    <div class="flex space-x-4">
+                                    <div class="flex space-x-8">
                                         <a href="{{ route('news.edit', $newsItem->id) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a>
                                         <form method="POST" action="{{ route('news.destroy', $newsItem->id) }}">
                                             @csrf
