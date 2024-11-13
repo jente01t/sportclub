@@ -17,7 +17,7 @@
                 <x-card 
                     title="{{ __('FAQ') }}" 
                     description="{{ __('Bekijk de veelgestelde vragen.') }}" 
-                    link="{{ route('faq.index') }}"
+                    link="{{ route('faq.indexUser') }}"
                 />
 
                 <x-card 

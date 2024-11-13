@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\News;
+use App\Models\FaqCategory;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -12,27 +13,25 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function dashboard(Request $request)
+    public function dashboard()
+    {
+        return view('admin.dashboard');
+    }
+
+    public function newsIndex(Request $request)
     {
         $query = $request->input('query');
-        $query2 = $request->input('query2');
 
         if ($query) {
-            $users = User::where('name', 'like', "%{$query}%")->get();
-        } else {
-            $users = User::all();
-        }
-
-        if ($query2) {
-            $newsItems = News::where('title', 'like', "%{$query2}%")
-                ->orWhere('content', 'like', "%{$query2}%")
+            $newsItems = News::where('title', 'like', "%{$query}%")
+                ->orWhere('content', 'like', "%{$query}%")
                 ->orderBy('published_at', 'desc')
                 ->get();
         } else {
             $newsItems = News::orderBy('published_at', 'desc')->get();
         }
 
-        return view('admin.dashboard', compact('users', 'newsItems', 'query', 'query2'));
+        return view('admin.news.index', compact('newsItems', 'query'));
     }
 
     public function promoteToAdmin($id)
@@ -41,7 +40,7 @@ class AdminController extends Controller
         $user->role = 'admin';
         $user->save();
 
-        return redirect()->route('admin.dashboard')->with('status', 'User promoted to admin.');
+        return redirect()->route('admin.users.index')->with('status', 'User promoted to admin.');
     }
 
     public function demoteToUser($id)
@@ -50,12 +49,12 @@ class AdminController extends Controller
         $user->role = 'user';
         $user->save();
 
-        return redirect()->route('admin.dashboard')->with('status', 'Admin demoted to user.');
+        return redirect()->route('admin.users.index')->with('status', 'Admin demoted to user.');
     }
 
     public function createUser()
     {
-        return view('admin.create-user');
+        return view('admin.users.create-user');
     }
 
     public function storeUser(StoreUserRequest $request)
@@ -76,6 +75,6 @@ class AdminController extends Controller
             'foto' => $fotoPath,
         ]);
 
-        return redirect()->route('admin.dashboard')->with('status', 'User created successfully.');
+        return redirect()->route('users.index')->with('status', 'User created successfully.');
     }
 }

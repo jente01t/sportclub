@@ -8,6 +8,9 @@ use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FaqCategoryController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -18,8 +21,7 @@ Route::prefix('news')->group(function () {
     Route::get('/{id}', [NewsController::class, 'show'])->name('news.show');
 });
 
-
-Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+Route::get('/faq', [FaqController::class, 'indexUser'])->name('faq.indexUser');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -48,6 +50,24 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
     Route::patch('/news/{id}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+    Route::get('/news', [AdminController::class, 'newsIndex'])->name('admin.news.index');
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::resource('faqs', FaqController::class)->names([
+        'index' => 'admin.faqs.index',
+        'create' => 'admin.faqs.create',
+        'store' => 'admin.faqs.store',
+        'edit' => 'admin.faqs.edit',
+        'update' => 'admin.faqs.update',
+        'destroy' => 'admin.faqs.destroy',
+    ]);
+    Route::resource('faq-categories', FaqCategoryController::class)->names([
+        'index' => 'admin.faq-categories.index',
+        'create' => 'admin.faq-categories.create',
+        'store' => 'admin.faq-categories.store',
+        'edit' => 'admin.faq-categories.edit',
+        'update' => 'admin.faq-categories.update',
+        'destroy' => 'admin.faq-categories.destroy',
+    ]);
 });
 
 require __DIR__.'/auth.php';

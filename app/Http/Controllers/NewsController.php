@@ -41,7 +41,7 @@ class NewsController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('news.index')->with('status', 'News item created successfully.');
+        return redirect()->route('admin.news.index')->with('status', 'News item created successfully.');
     }
 
     public function edit($id)
@@ -70,7 +70,7 @@ class NewsController extends Controller
             'published_at' => $request->published_at,
         ]);
 
-        return redirect()->route('news.index')->with('status', 'News item updated successfully.');
+        return redirect()->route('admin.news.index')->with('status', 'News item updated successfully.');
     }
 
     public function destroy($id)
@@ -81,6 +81,6 @@ class NewsController extends Controller
 
         $newsItem->delete();
 
-        return redirect()->route('news.index')->with('status', 'News item deleted successfully.');
+        return redirect()->route('admin.news.index')->with('status', 'News item deleted successfully.');
     }
 }

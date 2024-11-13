@@ -21,7 +21,7 @@
                     <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
                         {{ __('Nieuwtjes lezen') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.index')">
+                    <x-nav-link :href="route('faq.indexUser')" :active="request()->routeIs('faq.indexUser')">
                         {{ __('FAQ') }}
                     </x-nav-link>
                     <x-nav-link :href="route('contact.store')" :active="request()->routeIs('contact.store')">
@@ -117,7 +117,7 @@
             <x-responsive-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
                 {{ __('Nieuwtjes lezen') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.index')">
+            <x-responsive-nav-link :href="route('faq.indexUser')" :active="request()->routeIs('faq.indexUser')">
                 {{ __('FAQ') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('contact.store')" :active="request()->routeIs('contact.store')">
