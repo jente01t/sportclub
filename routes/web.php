@@ -22,6 +22,8 @@ Route::prefix('news')->group(function () {
 });
 
 Route::get('/faq', [FaqController::class, 'indexUser'])->name('faq.indexUser');
+
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');

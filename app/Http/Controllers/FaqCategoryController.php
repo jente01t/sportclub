@@ -10,12 +10,13 @@ class FaqCategoryController extends Controller
     public function index()
     {
         $categories = FaqCategory::all();
-        return view('admin.faqs.index', compact('categories'));
+        return view('admin.faq-categories.index', compact('categories'));
     }
 
     public function create()
     {
-        return view('admin.faqs.create');
+        $categories = FaqCategory::all();
+        return view('admin.faq-categories.create', compact('categories'));
     }
 
     public function store(Request $request)
