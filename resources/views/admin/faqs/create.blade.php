@@ -1,8 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create FAQ') }}
-        </h2>
+        <div class="flex items-center">
+            <x-return-button route="admin.faqs.index" /> &nbsp;
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-10">
+                {{ __('Create FAQ') }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">

@@ -23,6 +23,7 @@
                 <x-card 
                     title="{{ __('Contact pagina') }}" 
                     description="{{ __('Neem contact met ons op.') }}" 
+                    link="{{ route('contact.index') }}"
                 />
             </div>
         </div>

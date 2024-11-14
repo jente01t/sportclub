@@ -1,8 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit News Item') }}
-        </h2>
+        <div class="flex items-center">
+            <x-return-button route="admin.news.index" /> &nbsp;
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-10">
+                {{ __('Edit News Item') }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">
