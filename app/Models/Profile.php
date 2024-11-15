@@ -20,4 +20,9 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function sports()
+    {
+        return $this->belongsToMany(Sport::class, 'profile_sport');
+    }
 }

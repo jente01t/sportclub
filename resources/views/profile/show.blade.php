@@ -20,6 +20,14 @@
                             <img src="{{ asset('storage/' . $user->profile->foto) }}" alt="Profile Photo" class="w-22 h-22 rounded-full">
                         </div>
                         <div class="mt-4">
+                            <h4 class="text-md font-semibold">{{ __('Sporten') }}</h4>
+                            <ul class="list-disc pl-5">
+                                @foreach($user->profile->sports as $sport)
+                                    <li>{{ $sport->name }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="mt-4">
                             <h4 class="text-md font-semibold">{{ __('Over Mij') }}</h4>
                             <p class="text-gray-700">{{ $user->profile->bio }}</p>
                         </div>

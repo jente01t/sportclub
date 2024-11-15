@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('team_users', function (Blueprint $table) {
+        Schema::create('profile_sport', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('team_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('profile_id');
+            $table->unsignedBigInteger('sport_id');
             $table->timestamps();
+
+            $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
+            $table->foreign('sport_id')->references('id')->on('sports')->onDelete('cascade');
         });
     }
 
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('team_users');
+        Schema::dropIfExists('profile_sport');
     }
 };

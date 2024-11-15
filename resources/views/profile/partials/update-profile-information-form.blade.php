@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
+    <form method="post" action="{{ route('profile.update', $user->id) }}" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
@@ -64,9 +64,21 @@
             <input id="foto" name="foto" type="file" class="mt-1 block w-full" autofocus autocomplete="foto" />
             <x-input-error class="mt-2" :messages="$errors->get('foto')" />
         </div>
-        
 
-        <div class="flex items-center gap-4">
+        <div class="mt-4">
+            <x-input-label for="sports" :value="__('Sports')" />
+            <div class="flex flex-wrap gap-4">
+            @foreach($sports as $sport)
+                <label class="flex items-center space-x-2">
+                <input type="checkbox" name="sports[]" value="{{ $sport->id }}" {{ $user->profile->sports->contains($sport->id) ? 'checked' : '' }} class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                <span>{{ $sport->name }}</span>
+                </label>
+            @endforeach
+            </div>
+            <x-input-error :messages="$errors->get('sports')" class="mt-2" />
+        </div>
+
+        <div class="flex items-center gap-4 mt-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')

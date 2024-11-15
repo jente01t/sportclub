@@ -16,7 +16,7 @@ class ProfileController extends Controller
 {
     public function show($id): View
     {
-        $user = User::with('profile')->findOrFail($id);
+        $user = User::with('profile.sports')->findOrFail($id);
 
         return view('profile.show', [
             'user' => $user,
@@ -25,16 +25,18 @@ class ProfileController extends Controller
 
     public function edit(Request $request, $id): View
     {
-        $user = User::with('profile')->findOrFail($id);
+        $user = User::with('profile.sports')->findOrFail($id);
+        $sports = Sport::all();
 
         return view('profile.edit', [
             'user' => $user,
+            'sports' => $sports,
         ]);
     }
 
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request, $id): RedirectResponse
     {
-        $user = $request->user();
+        $user = User::findOrFail($id);
         $user->fill($request->validated());
 
         if ($user->isDirty('email')) {
@@ -56,6 +58,8 @@ class ProfileController extends Controller
             'bio' => $request->input('bio'),
             'foto' => $fotoPath,
         ]);
+
+        $user->profile->sports()->sync($request->input('sports', []));
 
         return Redirect::route('profile.edit', ['id' => $user->id])->with('status', 'profile-updated');
     }
