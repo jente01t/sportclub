@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FaqCategory;
-use Illuminate\Http\Request;
+use App\Http\Requests\FaqCategoryRequest;
 
 class FaqCategoryController extends Controller
 {
@@ -15,17 +15,12 @@ class FaqCategoryController extends Controller
 
     public function create()
     {
-        $categories = FaqCategory::all();
-        return view('admin.faq-categories.create', compact('categories'));
+        return view('admin.faq-categories.create');
     }
 
-    public function store(Request $request)
+    public function store(FaqCategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
-        FaqCategory::create($request->all());
+        FaqCategory::create($request->validated());
 
         return redirect()->route('admin.faq-categories.index')->with('status', 'Category created successfully.');
     }
@@ -35,13 +30,9 @@ class FaqCategoryController extends Controller
         return view('admin.faq-categories.edit', compact('faqCategory'));
     }
 
-    public function update(Request $request, FaqCategory $faqCategory)
+    public function update(FaqCategoryRequest $request, FaqCategory $faqCategory)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
-        $faqCategory->update($request->all());
+        $faqCategory->update($request->validated());
 
         return redirect()->route('admin.faq-categories.index')->with('status', 'Category updated successfully.');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FAQ;
 use App\Models\FaqCategory;
+use App\Http\Requests\FaqRequest;
 use Illuminate\Http\Request;
 
 class FaqController extends Controller
@@ -16,7 +17,6 @@ class FaqController extends Controller
 
         return view('faqs.index', compact('faqs', 'categories'));
     }
-
 
     public function index(Request $request)
     {
@@ -42,15 +42,9 @@ class FaqController extends Controller
         return view('admin.faqs.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(FaqRequest $request)
     {
-        $request->validate([
-            'question' => 'required|string|max:255',
-            'answer' => 'required|string',
-            'category_id' => 'required|exists:faq_categories,id',
-        ]);
-
-        Faq::create($request->all());
+        Faq::create($request->validated());
 
         return redirect()->route('admin.faqs.index')->with('status', 'FAQ created successfully.');
     }
@@ -61,15 +55,9 @@ class FaqController extends Controller
         return view('admin.faqs.edit', compact('faq', 'categories'));
     }
 
-    public function update(Request $request, Faq $faq)
+    public function update(FaqRequest $request, Faq $faq)
     {
-        $request->validate([
-            'question' => 'required|string|max:255',
-            'answer' => 'required|string',
-            'category_id' => 'required|exists:faq_categories,id',
-        ]);
-
-        $faq->update($request->all());
+        $faq->update($request->validated());
 
         return redirect()->route('admin.faqs.index')->with('status', 'FAQ updated successfully.');
     }

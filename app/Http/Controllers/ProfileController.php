@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Profile;
 use App\Models\User;
+use App\Models\Sport;
 
 class ProfileController extends Controller
 {

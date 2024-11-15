@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMessage;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
@@ -15,14 +16,8 @@ class ContactController extends Controller
         return view('contact.index', compact('user'));
     }
 
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'message' => 'required|string',
-        ]);
-
         Mail::to('admin@example.com')->send(new ContactMessage(
             $request->name,
             $request->email,
