@@ -28,6 +28,11 @@
                     description="{{ __('Create, edit, and delete FAQ and categories.') }}" 
                     link="{{ route('admin.faqs.index') }}" 
                 />
+                <x-card 
+                    title="{{ __('Manage Contact Forms') }}" 
+                    description="{{ __('View and reply to contact forms.') }}" 
+                    link="{{ route('admin.contact.contactIndex') }}"
+                />
             </div>
         </div>
     </div>

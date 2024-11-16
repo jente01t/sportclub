@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/profile/search', [ProfileController::class, 'search'])->name('profile.search');
+Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 
 Route::prefix('news')->group(function () {
     Route::get('/', [NewsController::class, 'index'])->name('news.index');
@@ -34,7 +35,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
 });
@@ -72,6 +72,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         'update' => 'admin.faq-categories.update',
         'destroy' => 'admin.faq-categories.destroy',
     ]);
+    Route::get('/contact', [AdminController::class, 'contactIndex'])->name('admin.contact.contactIndex');
+    Route::get('/contact/{id}', [AdminController::class, 'contactShow'])->name('admin.contact.contactShow');
+    Route::post('/contact/{id}/reply', [AdminController::class, 'contactReply'])->name('admin.contact.contactReply');
 });
 
 require __DIR__.'/auth.php';

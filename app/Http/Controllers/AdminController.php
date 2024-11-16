@@ -10,6 +10,9 @@ use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Models\ContactForm;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessage;
 
 class AdminController extends Controller
 {
@@ -76,5 +79,38 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('users.index')->with('status', 'User created successfully.');
+    }
+
+    public function contactIndex()
+    {
+        $contactForms = ContactForm::all();
+        return view('admin.contact.index', compact('contactForms'));
+    }
+
+    public function contactShow($id)
+    {
+        $contactForm = ContactForm::findOrFail($id);
+        return view('admin.contact.show', compact('contactForm'));
+    }
+
+    public function contactReply(Request $request, $id)
+    {
+        $request->validate([
+            'reply' => 'required|string',
+        ]);
+
+        $contactForm = ContactForm::findOrFail($id);
+
+        Mail::to($contactForm->email)->send(new ContactMessage(
+            $contactForm->name,
+            'admin@example.com',
+            $contactForm->message,
+            $contactForm->created_at,
+            $request->reply
+        ));
+
+        $contactForm->update(['answered' => true]);
+
+        return redirect()->route('admin.contact.contactIndex')->with('status', 'Reply sent successfully.');
     }
 }

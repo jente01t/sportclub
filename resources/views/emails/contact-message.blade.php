@@ -33,6 +33,13 @@
         <p><strong>Email:</strong> {{ $email }}</p>
         <p><strong>Message:</strong></p>
         <p>{{ $messageContent }}</p>
+        <p><strong>Submitted on:</strong> {{ $created_at->format('d-m-Y H:i') }}</p>
+
+        @if(isset($replyContent))
+            <hr>
+            <h2>Reply</h2>
+            <p>{{ $replyContent }}</p>
+        @endif
     </div>
 </body>
 </html>
