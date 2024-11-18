@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\ContactForm;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMessage;
+use App\Models\Comment;
 
 class AdminController extends Controller
 {
@@ -112,5 +113,21 @@ class AdminController extends Controller
         $contactForm->update(['answered' => true]);
 
         return redirect()->route('admin.contact.contactIndex')->with('status', 'Reply sent successfully.');
+    }
+
+    public function comments($id)
+    {
+        $newsItem = News::findOrFail($id);
+        $comments = $newsItem->comments;
+
+        return view('admin.news.comments', compact('newsItem', 'comments'));
+    }
+
+    public function commentsDestroy($newsId, $commentId)
+    {
+        $comment = Comment::where('news_id', $newsId)->findOrFail($commentId);
+        $comment->delete();
+
+        return redirect()->route('admin.news.comments', $newsId)->with('status', 'Comment deleted successfully.');
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FaqCategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -20,6 +21,7 @@ Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.s
 Route::prefix('news')->group(function () {
     Route::get('/', [NewsController::class, 'index'])->name('news.index');
     Route::get('/{id}', [NewsController::class, 'show'])->name('news.show');
+    Route::post('/{id}/comments', [CommentController::class, 'store'])->name('comments.store');
 });
 
 Route::get('/faq', [FaqController::class, 'indexUser'])->name('faq.indexUser');
@@ -54,6 +56,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
     Route::patch('/news/{id}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+    Route::get('/news/{id}/comments', [AdminController::class, 'comments'])->name('admin.news.comments');
+    Route::delete('/news/{newsId}/comments/{commentId}', [AdminController::class, 'commentsDestroy'])->name('admin.news.commentsDestroy');
     Route::get('/news', [AdminController::class, 'newsIndex'])->name('admin.news.index');
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::resource('faqs', FaqController::class)->names([

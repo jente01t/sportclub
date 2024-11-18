@@ -13,9 +13,37 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h3 class="text-2xl font-bold">{{ $newsItem->title }}</h3>
-                    <img src="{{ asset('storage/' . $newsItem->image_path) }}" alt="{{ $newsItem->title }}" class="w-full h-auto mt-4 mb-4">
-                    <p class="text-gray-600">{{ $newsItem->published_at }}</p>
-                    <p class="text-gray-700 mt-4 break-words overflow-hidden">{{ $newsItem->content }}</p>
+                    <img src="{{ asset('storage/' . $newsItem->image_path) }}" alt="{{ $newsItem->title }}" class="w-32 h-auto mb-4">
+                    <p>{{ $newsItem->content }}</p>
+                    <p class="text-gray-600 text-sm mt-4">{{ $newsItem->published_at }}</p>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-6">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <h3 class="font-semibold text-lg mb-4">{{ __('Comments') }}</h3>
+                    @foreach($newsItem->comments as $comment)
+                        <div class="mb-4">
+                            <p class="text-gray-800">{{ $comment->content }}</p>
+                            <p class="text-gray-600 text-sm">{{ $comment->user->name }} - {{ $comment->created_at }}</p>
+                        </div>
+                    @endforeach
+
+                    @auth
+                        <form method="POST" action="{{ route('comments.store', $newsItem->id) }}">
+                            @csrf
+                            <div class="mt-4">
+                                <x-input-label for="content" :value="__('Add a comment')" />
+                                <textarea id="content" name="content" class="block mt-1 w-full" rows="3" required></textarea>
+                                <x-input-error :messages="$errors->get('content')" class="mt-2" />
+                            </div>
+                            <div class="flex items-center justify-end mt-4">
+                                <x-primary-button>{{ __('Post Comment') }}</x-primary-button>
+                            </div>
+                        </form>
+                    @else
+                        <p class="text-gray-600">{{ __('Please log in to post a comment.') }}</p>
+                    @endauth
                 </div>
             </div>
         </div>

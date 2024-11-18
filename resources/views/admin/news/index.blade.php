@@ -40,6 +40,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900">{{ __('Delete') }}</button>
                                         </form>
+                                        <a href="{{ route('admin.news.comments', $newsItem->id) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Manage Comments') }}</a>
                                     </div>
                                 </li>
                             @endforeach

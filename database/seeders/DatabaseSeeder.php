@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FaqCategorySeeder::class);
         $this->call(FaqSeeder::class);
         $this->call(ContactFormSeeder::class);
+        $this->call(CommentSeeder::class);
 
 
     }

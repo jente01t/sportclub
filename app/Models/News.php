@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class News extends Model
 {
@@ -17,5 +18,9 @@ class News extends Model
 
     function user () {
         return $this->belongsTo(User::class);
+    }
+
+    function comments () {
+        return $this->hasMany(Comment::class);
     }
 }
