@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->call(FaqSeeder::class);
         $this->call(ContactFormSeeder::class);
         $this->call(CommentSeeder::class);
+        $this->call(ChatSeeder::class);
+        $this->call(MessageSeeder::class);
+        
 
 
     }

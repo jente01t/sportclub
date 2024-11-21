@@ -31,12 +31,14 @@
                     description="{{ __('Neem contact met ons op.') }}" 
                     link="{{ route('contact.index') }}"
                 />
-
-                <x-card 
-                    title="{{ __('Chat') }}" 
-                    description="{{ __('Chat met andere gebruikers.') }}" 
-                    link="{{ route('chats.index') }}"
-                />
+                
+                @auth
+                    <x-card 
+                        title="{{ __('Chat') }}" 
+                        description="{{ __('Chat met andere gebruikers.') }}" 
+                        link="{{ route('chats.index') }}"
+                    />
+                @endauth
             </div>
         </div>
     </div>
