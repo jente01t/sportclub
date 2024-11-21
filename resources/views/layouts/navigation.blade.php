@@ -27,6 +27,11 @@
                     <x-nav-link :href="route('contact.store')" :active="request()->routeIs('contact.store')">
                         {{ __('Contact pagina') }}
                     </x-nav-link>
+                    @auth 
+                        <x-nav-link :href="route('chats.index')" :active="request()->routeIs('chats.index')">
+                            {{ __('Chats') }}
+                        </x-nav-link>
+                    @endauth
                 </div>
             </div>
 
@@ -123,6 +128,11 @@
             <x-responsive-nav-link :href="route('contact.store')" :active="request()->routeIs('contact.store')">
                 {{ __('Contact pagina') }}
             </x-responsive-nav-link>
+            @auth 
+                <x-responsive-nav-link :href="route('chats.index')" :active="request()->routeIs('chats.index')">
+                    {{ __('Chats') }}
+                </x-responsive-nav-link>
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
@@ -137,6 +147,11 @@
                     <x-responsive-nav-link :href="route('profile.show', ['id' => Auth::user()->id])">
                         {{ __('Profiel') }}
                     </x-responsive-nav-link>
+                    @if(Auth::user()->role == 'admin')
+                        <x-responsive-nav-link :href="route('admin.dashboard')">
+                            {{ __('Admin dashboard') }}
+                        </x-responsive-nav-link>
+                    @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <x-responsive-nav-link :href="route('logout')"

@@ -1,4 +1,10 @@
-<x-guest-layout>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Home') }}
+        </h2>
+    </x-slot>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -25,7 +31,13 @@
                     description="{{ __('Neem contact met ons op.') }}" 
                     link="{{ route('contact.index') }}"
                 />
+
+                <x-card 
+                    title="{{ __('Chat') }}" 
+                    description="{{ __('Chat met andere gebruikers.') }}" 
+                    link="{{ route('chats.index') }}"
+                />
             </div>
         </div>
     </div>
-</x-guest-layout>
+</x-app-layout>
