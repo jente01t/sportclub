@@ -13,14 +13,14 @@ class SportSeeder extends Seeder
     public function run(): void
     {
         $sports = [
-            'Football',
-            'Basketball',
+            'Voetbal',
+            'Basketbal',
             'Tennis',
-            'Swimming',
-            'Running',
-            'Cycling',
-            'Baseball',
-            'Volleyball',
+            'Zwemmen',
+            'Hardlopen',
+            'Fietsen',
+            'Honkbal',
+            'Volleybal',
             'Hockey',
             'Golf'
         ];

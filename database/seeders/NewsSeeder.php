@@ -22,21 +22,21 @@ class NewsSeeder extends Seeder
             $user = User::factory()->create();
         }
 
-        $imagePath1 = 'news/test.png';
-        $imagePath2 = 'news/test2.png';
+        $imagePath1 = 'news/news1.png';
+        $imagePath2 = 'news/news2.png';
 
         News::create([
-            'title' => 'Eerste Nieuwsbericht',
+            'title' => 'Nieuwe Dumbbells Beschikbaar',
             'image_path' => $imagePath1,
-            'content' => 'Dit is de inhoud van het eerste nieuwsbericht.',
+            'content' => 'We hebben nieuwe dumbbells beschikbaar in onze fitnessruimte. Kom langs en probeer ze uit!',
             'published_at' => Carbon::now()->toDateString(),
             'user_id' => $user->id,
         ]);
 
         News::create([
-            'title' => 'Tweede Nieuwsbericht',
+            'title' => 'Marathon Evenement',
             'image_path' => $imagePath2,
-            'content' => 'Dit is de inhoud van het tweede nieuwsbericht.',
+            'content' => 'Doe mee aan onze jaarlijkse marathon! Het evenement vindt plaats op 25 juni. Schrijf je nu in!',
             'published_at' => Carbon::now()->subDays(1)->toDateString(),
             'user_id' => $user->id,
         ]);

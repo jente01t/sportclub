@@ -42,7 +42,7 @@
                             </div>
                         </form>
                     @else
-                        <p class="text-gray-600">{{ __('Please log in to post a comment.') }}</p>
+                        <p class="text-gray-600">{{ __('Log in om een reactie te plaatsen.') }}</p>
                     @endauth
                 </div>
             </div>

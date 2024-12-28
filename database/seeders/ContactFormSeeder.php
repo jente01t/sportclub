@@ -15,21 +15,21 @@ class ContactFormSeeder extends Seeder
         ContactForm::create([
             'name' => 'John Doe',
             'email' => 'john@example.com',
-            'message' => 'This is a test message from John Doe.',
+            'message' => 'Dit is een bericht van John Doe.',
             'answered' => false,
         ]);
 
         ContactForm::create([
             'name' => 'Jane Smith',
             'email' => 'jane@example.com',
-            'message' => 'This is a test message from Jane Smith.',
+            'message' => 'Dit is een bericht van Jane Smith.',
             'answered' => true,
         ]);
 
         ContactForm::create([
             'name' => 'Alice Johnson',
             'email' => 'alice@example.com',
-            'message' => 'This is a test message from Alice Johnson.',
+            'message' => 'Dit is een bericht van Alice Johnson.',
             'answered' => false,
         ]);
     }
