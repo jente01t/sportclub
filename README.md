@@ -6,13 +6,14 @@ Dit project is een Laravel-gebaseerde webapplicatie voor een sportclub. Het bied
 ## Setup Instructies
 1. **Clone het project**
 ```bash
-git clone <https://github.com/jente01t/sportclub>
+git clone https://github.com/jente01t/sportclub
 cd sportclub
 ```
 
 2. **Installeer dependencies**
 ```bash
 composer install
+npm install
 ```
 
 3. **Configureer omgeving**
@@ -31,7 +32,7 @@ php artisan storage:link
 - Update .env met je database gegevens:
 ```env
 DB_CONNECTION=sqlite
-DB_DATABASE=/var/www/html/sportclub/database/database.sqlite
+DB_DATABASE=database.sqlite
 DB_FOREIGN_KEYS=true
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -50,21 +51,29 @@ MAIL_FROM_ADDRESS="hello@example.com"
 MAIL_FROM_NAME="${APP_NAME}"
 ```
 
-7. **Migreer en seed de database**
+7. **Maak de database file**
+```bash
+php artisan migrate
+```
+Would you like to create it?
+YES
+
+8. **Migreer en seed de database**
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-8. **Start de applicatie**
+9. **Start de applicatie**
 ```bash
+npm run build
 php artisan serve
 ```
 
-9. **Admin toegang**
+10. **Admin toegang**
 - Email: admin@ehb.be
 - Wachtwoord: Password!321
 
-10. **User toegang**
+11. **User toegang**
 - Email: user@ehb.be
 - Wachtwoord: 123
 
@@ -80,6 +89,7 @@ php artisan serve
 
 - **Profielpagina**
   - Publieke profielen (toegankelijk voor alle bezoekers)
+  - Zoeken op naam
   - Profielfoto upload en opslag op server
   - Persoonlijke informatie beheer waaronder:
     - Username
@@ -116,6 +126,7 @@ php artisan serve
 
 ## References
 - Github Copilot Completions in Visual Studio Code
+- https://canvas.ehb.be/courses/40595
 - https://laravel.com/docs/11.x
 - https://primeoutsourcing.com/tutorials/content/creating-model-view-and-controller-on-your-laravel-project 
 - https://www.laravelpackage.com/09-routing/ 
