@@ -4,41 +4,47 @@
 Dit project is een Laravel-gebaseerde webapplicatie voor een sportclub. Het biedt functionaliteiten voor ledenbeheer, nieuws, FAQ's en communicatie tussen leden.
 
 ## Setup Instructies
-1. **Clone het project**
+1. **voorwaarden**
+- WSL met Ubuntu geïnstalleerd  (apache2 en mysql service moeten runnen)
+- composer geïnstalleerd via WSL
+- Node.js en npm geïnstalleerd
+- PHP 8.2 of hoger geïnstalleerd
+
+2. **Clone het project in WSL**
 ```bash
 git clone https://github.com/jente01t/sportclub
 cd sportclub
 ```
 
-2. **Installeer dependencies**
+3. **Installeer dependencies**
 ```bash
 composer install
 npm install
 ```
 
-3. **Configureer omgeving**
+4. **Configureer omgeving**
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-4. **Storage setup**
+5. **Storage setup**
 ```bash
 php artisan storage:link
 ```
 
-5. **Database setup**
+6. **Database setup**
 - Maak een nieuwe database aan
-- Update .env met je database gegevens:
+- Update .env met je database gegevens, verander ```{YOUR_WSL_PATH}``` met het absolute pad naar de file BVB: ```/var/www/html/sportclub/database/database.sqlite```:
 ```env
 DB_CONNECTION=sqlite
-DB_DATABASE=database.sqlite
+DB_DATABASE={YOUR_WSL_PATH}/database/database.sqlite 
 DB_FOREIGN_KEYS=true
 DB_HOST=127.0.0.1
 DB_PORT=3306
 ```
 
-6. **Mail configuratie**
+7. **Mail configuratie**
 - Update .env met de mail instellingen:
 ```env
 MAIL_MAILER=smtp
@@ -51,29 +57,32 @@ MAIL_FROM_ADDRESS="hello@example.com"
 MAIL_FROM_NAME="${APP_NAME}"
 ```
 
-7. **Maak de database file**
+8. **Maak de database file**
 ```bash
 php artisan migrate
 ```
-Would you like to create it?
-YES
+Would you like to create it? <br>
+- YES
 
-8. **Migreer en seed de database**
+9. **Migreer en seed de database**
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-9. **Start de applicatie**
+10. **Start de applicatie**
 ```bash
 npm run build
 php artisan serve
 ```
+11. **Open browser** <br>
+Open de browser en surf naar ```http://127.0.0.1:8000/``` of ```http://localhost:8000/ ```
 
-10. **Admin toegang**
+
+11. **Admin toegang**
 - Email: admin@ehb.be
 - Wachtwoord: Password!321
 
-11. **User toegang**
+12. **User toegang**
 - Email: user@ehb.be
 - Wachtwoord: 123
 
